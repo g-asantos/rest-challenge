@@ -4,6 +4,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 
@@ -21,17 +23,34 @@ public class Adress {
 	
 	private String district;
 	
+	private String cep;
+	
 	private Integer adress_number;
 	
 	private Integer complement;
 	
+	@ManyToOne
+    @JoinColumn(name="user_id")
+	private User user;
+	
 
-	public Adress(String city, String state, String district, Integer adress_number, Integer complement) {
+	public Adress(String city, String state, String district, Integer adress_number, Integer complement,
+			User user, String cep) {
 		this.city = city;
 		this.state = state;
 		this.district = district;
 		this.adress_number = adress_number;
 		this.complement = complement;
+		this.cep = cep;
+		this.user = user;
+	}
+	
+	public Adress() {
+		
+	}
+
+	public User getUser() {
+		return user;
 	}
 
 	public Long getId() {
@@ -76,6 +95,14 @@ public class Adress {
 
 	public void setComplement(Integer complement) {
 		this.complement = complement;
+	}
+
+	public String getCep() {
+		return cep;
+	}
+
+	public void setCep(String cep) {
+		this.cep = cep;
 	}
 	
 	

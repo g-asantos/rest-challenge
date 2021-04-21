@@ -1,18 +1,16 @@
 package com.demo.dto;
 
 
-
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 
 import com.demo.model.Adress;
 import com.demo.model.User;
-import com.demo.service.DateConverterService;
 
-public class UserDto {
-	
+public class UserWithAdressDto {
 	private Long id;
 
 	@NotEmpty @NotBlank
@@ -27,21 +25,30 @@ public class UserDto {
 	@NotEmpty @NotBlank
 	private String birth_date;
 	
-	private List<Adress> enderecos;
+	private List<AdressDto> enderecos;
 
-	public UserDto(User user) {
+	public UserWithAdressDto(User user) {
 		this.name = user.getName();
 		this.email = user.getEmail();
 		this.cpf = user.getCpf();
-		this.birth_date = user.getBirth_date().format(new DateConverterService().formatter).toString();
+		this.birth_date = user.getBirth_date().toString();
 		this.id = user.getId();
-		this.enderecos = user.getEnderecos();
+		this.enderecos = converter(user.getEnderecos());
 	}
 	
-	
-	public UserDto(){
+	public UserWithAdressDto(){
 		
 	}
+	
+	
+	public static List<AdressDto> converter(List<Adress> adress) {
+		return adress.stream().map(AdressDto::new).collect(Collectors.toList());
+	}
+	
+	public List<AdressDto> getEnderecos() {
+		return enderecos;
+	}
+
 	
 	public String getName() {
 		return name;
@@ -63,10 +70,4 @@ public class UserDto {
 	public Long getId() {
 		return id;
 	}
-	
-	public List<Adress> getEnderecos() {
-		return enderecos;
-	}
-
-	
 }

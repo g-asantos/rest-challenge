@@ -1,15 +1,13 @@
 package com.demo.model;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
@@ -31,20 +29,21 @@ public class User {
 	private String cpf;
 	
 	
-	private LocalDateTime birth_date;
+	private LocalDate birth_date;
 	
-	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-	@JoinColumn(name = "user_id")
+	@OneToMany(mappedBy = "user")
 	private List<Adress> enderecos = new ArrayList<>();
 	
 	
-	
-	
-	public User(String name, String email, String cpf, LocalDateTime birth_date) {
+	public User(String name, String email, String cpf, LocalDate birth_date) {
 		this.name = name;
 		this.email = email;
 		this.cpf = cpf;
 		this.birth_date = birth_date;
+	}
+	
+	public User() {
+		
 	}
 
 	public Long getId() {
@@ -75,11 +74,11 @@ public class User {
 		this.cpf = cpf;
 	}
 
-	public LocalDateTime getBirth_date() {
+	public LocalDate getBirth_date() {
 		return birth_date;
 	}
 
-	public void setBirth_date(LocalDateTime birth_date) {
+	public void setBirth_date(LocalDate birth_date) {
 		this.birth_date = birth_date;
 	}
 
@@ -87,8 +86,8 @@ public class User {
 		return enderecos;
 	}
 
-	public void setEnderecos(List<Adress> enderecos) {
-		this.enderecos = enderecos;
+	public void addToEnderecos(Adress adress) {
+		enderecos.add(adress);
 	}
 	
 	
