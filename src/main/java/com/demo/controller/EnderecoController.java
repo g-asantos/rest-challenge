@@ -8,40 +8,56 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import com.demo.dto.AdressDto;
-import com.demo.model.Adress;
-import com.demo.model.User;
-import com.demo.repository.AdressRepository;
-import com.demo.repository.UserRepository;
+import com.demo.controller.Form.EnderecoForm;
+import com.demo.dto.EnderecoDto;
+import com.demo.model.Endereco;
+import com.demo.model.Usuario;
+import com.demo.repository.EnderecoRepository;
+import com.demo.repository.UsuarioRepository;
+import com.demo.service.CepService;
 
 @RestController
 @RequestMapping("/enderecos")
-public class AdressController {
+public class EnderecoController {
 	
 	
 	@Autowired
-	private AdressRepository adressRepository;
+	private EnderecoRepository adressRepository;
 	
 	@Autowired
-	private UserRepository userRepository;
+	private UsuarioRepository userRepository;
+	
+	@Autowired
+	private CepService cepService;
+	
+	
+
+	@GetMapping("/{cep}")
+	   public Endereco getCep(String cep) {
+			
+	        Endereco adress = cepService.buscaEnderecoPorCep(cep);
+	        return adress != null ? adress : null; 
+	   }
+	
 	
 	@PostMapping
 	@Transactional
-	public ResponseEntity<AdressDto> register(@RequestBody @Valid AdressDto adressDto,
+	public ResponseEntity<EnderecoDto> register(@RequestBody @Valid EnderecoForm adressForm,
 	UriComponentsBuilder uriBuilder){
 		
-		Optional<User> user = userRepository.findById(adressDto.getUser_id());
+		Optional<Usuario> user = userRepository.findById(Long.parseLong(adressForm.getUser_id()));
 		
 		if(user.isPresent()) {
-			Adress adress = new Adress(adressDto.getCity(), adressDto.getState(), adressDto.getDistrict(),
-					adressDto.getAdress_number(), adressDto.getComplement(), user.get(), adressDto.getCep());
 			
+			
+			Endereco adress = new Endereco(getCep(adressForm.getCep()), user.get());
 			
 			adressRepository.save(adress);
 			
@@ -51,7 +67,7 @@ public class AdressController {
 			
 			URI uri = uriBuilder.path("/enderecos/{id}").buildAndExpand(adress.getId()).toUri();
 			
-			return ResponseEntity.created(uri).body(new AdressDto(adress));
+			return ResponseEntity.created(uri).body(new EnderecoDto(adress));
 		}
 		
 		

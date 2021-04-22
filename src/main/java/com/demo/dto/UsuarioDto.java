@@ -7,11 +7,11 @@ import java.util.List;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 
-import com.demo.model.Adress;
-import com.demo.model.User;
+import com.demo.model.Endereco;
+import com.demo.model.Usuario;
 import com.demo.service.DateConverterService;
 
-public class UserDto {
+public class UsuarioDto {
 	
 	private Long id;
 
@@ -27,9 +27,9 @@ public class UserDto {
 	@NotEmpty @NotBlank
 	private String birth_date;
 	
-	private List<Adress> enderecos;
+	private List<Endereco> enderecos;
 
-	public UserDto(User user) {
+	public UsuarioDto(Usuario user) {
 		this.name = user.getName();
 		this.email = user.getEmail();
 		this.cpf = user.getCpf();
@@ -39,7 +39,7 @@ public class UserDto {
 	}
 	
 	
-	public UserDto(){
+	public UsuarioDto(){
 		
 	}
 	
@@ -64,7 +64,7 @@ public class UserDto {
 		return id;
 	}
 	
-	public List<Adress> getEnderecos() {
+	public List<Endereco> getEnderecos() {
 		return enderecos;
 	}
 

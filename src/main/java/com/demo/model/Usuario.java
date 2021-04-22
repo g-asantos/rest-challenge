@@ -14,7 +14,7 @@ import javax.persistence.UniqueConstraint;
 
 @Entity
 @Table(name = "usuarios", uniqueConstraints = @UniqueConstraint(columnNames = {"email", "cpf"}))
-public class User {
+public class Usuario {
 	
 	
 	@Id
@@ -32,17 +32,17 @@ public class User {
 	private LocalDate birth_date;
 	
 	@OneToMany(mappedBy = "user")
-	private List<Adress> enderecos = new ArrayList<>();
+	private List<Endereco> enderecos = new ArrayList<>();
 	
 	
-	public User(String name, String email, String cpf, LocalDate birth_date) {
+	public Usuario(String name, String email, String cpf, LocalDate birth_date) {
 		this.name = name;
 		this.email = email;
 		this.cpf = cpf;
 		this.birth_date = birth_date;
 	}
 	
-	public User() {
+	public Usuario() {
 		
 	}
 
@@ -82,11 +82,11 @@ public class User {
 		this.birth_date = birth_date;
 	}
 
-	public List<Adress> getEnderecos() {
+	public List<Endereco> getEnderecos() {
 		return enderecos;
 	}
 
-	public void addToEnderecos(Adress adress) {
+	public void addToEnderecos(Endereco adress) {
 		enderecos.add(adress);
 	}
 	

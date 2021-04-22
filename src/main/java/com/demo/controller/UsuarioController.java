@@ -19,38 +19,38 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.demo.dto.UserDto;
-import com.demo.dto.UserWithAdressDto;
-import com.demo.model.User;
-import com.demo.repository.UserRepository;
+import com.demo.dto.UsuarioDto;
+import com.demo.dto.UsuarioComEnderecoDto;
+import com.demo.model.Usuario;
+import com.demo.repository.UsuarioRepository;
 import com.demo.service.DateConverterService;
 
 @RestController
 @RequestMapping("/usuarios")
-public class UserController {
+public class UsuarioController {
 
 	
 	@Autowired
-	private UserRepository userRepository;
+	private UsuarioRepository userRepository;
 	
 	
 	@PostMapping
 	@Transactional
-	public ResponseEntity<UserDto> register(@RequestBody @Valid UserDto userDto,
+	public ResponseEntity<UsuarioDto> register(@RequestBody @Valid UsuarioDto userDto,
 	UriComponentsBuilder uriBuilder){
 		
 		DateConverterService dateConverter = new DateConverterService();
 		
 		LocalDate convertedDate = dateConverter.formatStringDate(userDto.getBirth_date());
 		
-		User user = new User(userDto.getName(), userDto.getEmail(), userDto.getCpf(),
+		Usuario user = new Usuario(userDto.getName(), userDto.getEmail(), userDto.getCpf(),
 				convertedDate);
 		
 		userRepository.save(user);
 		
 		URI uri = uriBuilder.path("/usuarios/{id}").buildAndExpand(user.getId()).toUri();
 		
-		return ResponseEntity.created(uri).body(new UserDto(user));
+		return ResponseEntity.created(uri).body(new UsuarioDto(user));
 	}
 	
 	@GetMapping(path = {"/{id}"})
@@ -58,11 +58,11 @@ public class UserController {
 			Long id,
 			UriComponentsBuilder uriBuilder){
 		
-		Optional<User> user = userRepository.findById(id);
+		Optional<Usuario> user = userRepository.findById(id);
 		
 		if(user.isPresent()) {
 			
-			return ResponseEntity.status(200).body(new UserWithAdressDto(user.get()));
+			return ResponseEntity.status(200).body(new UsuarioComEnderecoDto(user.get()));
 		}
 		
 

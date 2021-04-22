@@ -7,10 +7,10 @@ import java.util.stream.Collectors;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 
-import com.demo.model.Adress;
-import com.demo.model.User;
+import com.demo.model.Endereco;
+import com.demo.model.Usuario;
 
-public class UserWithAdressDto {
+public class UsuarioComEnderecoDto {
 	private Long id;
 
 	@NotEmpty @NotBlank
@@ -25,9 +25,9 @@ public class UserWithAdressDto {
 	@NotEmpty @NotBlank
 	private String birth_date;
 	
-	private List<AdressDto> enderecos;
+	private List<EnderecoDto> enderecos;
 
-	public UserWithAdressDto(User user) {
+	public UsuarioComEnderecoDto(Usuario user) {
 		this.name = user.getName();
 		this.email = user.getEmail();
 		this.cpf = user.getCpf();
@@ -36,16 +36,16 @@ public class UserWithAdressDto {
 		this.enderecos = converter(user.getEnderecos());
 	}
 	
-	public UserWithAdressDto(){
+	public UsuarioComEnderecoDto(){
 		
 	}
 	
 	
-	public static List<AdressDto> converter(List<Adress> adress) {
-		return adress.stream().map(AdressDto::new).collect(Collectors.toList());
+	public static List<EnderecoDto> converter(List<Endereco> adress) {
+		return adress.stream().map(EnderecoDto::new).collect(Collectors.toList());
 	}
 	
-	public List<AdressDto> getEnderecos() {
+	public List<EnderecoDto> getEnderecos() {
 		return enderecos;
 	}
 
