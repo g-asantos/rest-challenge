@@ -45,7 +45,9 @@ public class Usuario {
 	public Usuario() {
 		
 	}
-
+	
+	// Abaixo apenas os getters e setters da classe
+	
 	public Long getId() {
 		return id;
 	}

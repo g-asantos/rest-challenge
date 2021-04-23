@@ -2,7 +2,7 @@ package com.demo.dto;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
+
 
 import com.demo.model.Endereco;
 
@@ -38,9 +38,6 @@ public class EnderecoDto {
 	
 	@NotEmpty @NotBlank
 	private String siafi;
-	
-	@NotNull
-	private Long user_id;
 
 	
 
@@ -55,7 +52,6 @@ public class EnderecoDto {
 		this.gia = adress.getGia();
 		this.ddd = adress.getDdd();
 		this.siafi = adress.getSiafi();
-		this.user_id = adress.getUser().getId();
 	}
 
 
@@ -126,11 +122,7 @@ public class EnderecoDto {
 
 
 
-	public Long getUser_id() {
-		return user_id;
-	}
-	
-	
+
 	
 	
 }

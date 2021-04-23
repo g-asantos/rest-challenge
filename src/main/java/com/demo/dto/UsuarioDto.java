@@ -13,7 +13,7 @@ import com.demo.service.DateConverterService;
 
 public class UsuarioDto {
 	
-	private Long id;
+
 
 	@NotEmpty @NotBlank
 	private String name;
@@ -34,7 +34,6 @@ public class UsuarioDto {
 		this.email = user.getEmail();
 		this.cpf = user.getCpf();
 		this.birth_date = user.getBirth_date().format(new DateConverterService().formatter).toString();
-		this.id = user.getId();
 		this.enderecos = user.getEnderecos();
 	}
 	
@@ -59,10 +58,6 @@ public class UsuarioDto {
 		return birth_date;
 	}
 	
-	
-	public Long getId() {
-		return id;
-	}
 	
 	public List<Endereco> getEnderecos() {
 		return enderecos;

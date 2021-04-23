@@ -11,7 +11,7 @@ import com.demo.model.Endereco;
 import com.demo.model.Usuario;
 
 public class UsuarioComEnderecoDto {
-	private Long id;
+
 
 	@NotEmpty @NotBlank
 	private String name;
@@ -32,7 +32,6 @@ public class UsuarioComEnderecoDto {
 		this.email = user.getEmail();
 		this.cpf = user.getCpf();
 		this.birth_date = user.getBirth_date().toString();
-		this.id = user.getId();
 		this.enderecos = converter(user.getEnderecos());
 	}
 	
@@ -67,7 +66,4 @@ public class UsuarioComEnderecoDto {
 	}
 	
 	
-	public Long getId() {
-		return id;
-	}
 }
