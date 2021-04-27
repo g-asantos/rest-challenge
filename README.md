@@ -1,5 +1,6 @@
-# Desafio realizado durante processo seletivo do Orange Talents da Zup
+# Rest Challenge
 
+Desafio realizado durante processo seletivo do Orange Talents da Zup
 
 
 ### Instalação
